@@ -39,3 +39,12 @@ jobs:
        dockerfile: Dockerfile
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Trigger Rundeck Job
+      run: |
+        curl -X POST \
+          --header "X-Rundeck-Auth-Token: ${{ secrets.RUNDECK_API_TOKEN }}" \
+          --header "Content-Type: application/json" \
+          --url "http://localhost:4440/api/47/job/23560d3f-f68c-4616-89dc-82a41cfb971d/run"
+      env:
+        RUNDECK_API_TOKEN: ${{ secrets.RUNDECK_API_TOKEN }}
